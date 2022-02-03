@@ -159,7 +159,7 @@ qqnorm(x); qqline(x)
 qqplot(qt(ppoints(250), df = 5), x, xlab = "Q-Q plot for t dsn")
 qqline(x)
 
-tf2 <- is.na(ECOSYSTEM) # records True values if the value is NA
+tf2 <- is.na(AIR_H) # records True values if the value is NA
 E2 <- AIR_H[!tf] # filters out NA values, new array
 AIR_H
 summary(AIR_H)
@@ -178,7 +178,7 @@ qqnorm(x); qqline(x)
 qqplot(qt(ppoints(250), df = 5), x, xlab = "Q-Q plot for t dsn")
 qqline(x)
 
-tf2 <- is.na(ECOSYSTEM) # records True values if the value is NA
+tf2 <- is.na(AIR_E) # records True values if the value is NA
 E2 <- AIR_E[!tf] # filters out NA values, new array
 AIR_E
 summary(AIR_E)
@@ -196,3 +196,54 @@ x <- rt(250, df = 5)
 qqnorm(x); qqline(x)
 qqplot(qt(ppoints(250), df = 5), x, xlab = "Q-Q plot for t dsn")
 qqline(x)
+
+qqplot(AIR_E,AIR_H)
+qqplot(WATER_E,WATER_H)
+boxplot(AIR_E, AIR_H, ENVHEALTH, ECOSYSTEM,WATER_E, WATER_H,DALY)
+
+wt_data <- read.csv(file = '/Users/pebend/Downloads/water-treatment.csv', header = T) #from my own system
+wt_data
+View(wt_data)
+attach(wt_data)
+
+g_data <- read.csv(file = '/Users/pebend/Downloads/GPW3_GRUMP_SummaryInformation_2010.csv', header = T) #from my own system
+g_data
+View(g_data)
+attach(g_data)
+
+tf4 <- is.na(PopulationPerUnit) # records True values if the value is NA
+E4 <- PopulationPerUnit[!tf] # filters out NA values, new array
+PopulationPerUnit
+summary(PopulationPerUnit)
+fivenum(PopulationPerUnit, na.rm=TRUE)
+boxplot(PopulationPerUnit)
+stem(PopulationPerUnit)		 # stem and leaf plot
+hist(PopulationPerUnit)
+hist(PopulationPerUnit, seq(0., 2658., 1.0), prob=TRUE)
+lines(density(PopulationPerUnit,na.rm=TRUE,bw=1.)) # or try bw=â€œSJâ€
+rug(PopulationPerUnit) 
+plot(ecdf(PopulationPerUnit), do.points=FALSE, verticals=TRUE) 
+par(pty="s") 
+qqnorm(PopulationPerUnit); qqline(PopulationPerUnit)
+x <- rt(250, df = 5)
+qqnorm(x); qqline(x)
+qqplot(qt(ppoints(250), df = 5), x, xlab = "Q-Q plot for t dsn")
+qqline(x)
+
+tf5 <- is.na(Landarea) # records True values if the value is NA
+E5 <- Landarea[!tf] # filters out NA values, new array
+Landarea
+summary(Landarea)
+fivenum(Landarea, na.rm=TRUE)
+boxplot(Landarea)
+stem(Landarea)		 # stem and leaf plot
+hist(Landarea)
+lines(density(Landarea,na.rm=TRUE,bw=1.)) # or try bw=â€œSJâ€
+rug(Landarea) 
+plot(ecdf(Landarea), do.points=FALSE, verticals=TRUE) 
+par(pty="s") 
+qqnorm(Landarea); qqline(Landarea)
+x <- rt(250, df = 5)
+qqnorm(x); qqline(x)
+
+qqplot(PopulationPerUnit,Landarea)
