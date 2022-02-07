@@ -247,3 +247,33 @@ x <- rt(250, df = 5)
 qqnorm(x); qqline(x)
 
 qqplot(PopulationPerUnit,Landarea)
+                         
+data_mv <- read.csv(file = '/Users/pebend/Downloads/multivariate.csv', header = T) #from my own system
+data_mv
+
+View(data_mv)
+head(data_mv)
+attach(data_mv)
+help(lm)
+mm <-lm(Homeowners~Immigrant)
+mm # mm here is a R object. 
+summary(mm)$coef
+
+plot(Homeowners~Immigrant)
+help(abline)
+abline(mm)
+abline(mm,col=2,lwd=3)
+newImmigrantdata <- data.frame(Immigrant = c(0,  20))
+mm %>% predict(newImmigrantdata)
+
+abline(mm)
+abline(mm,col=3,lwd=3) # line color = green, line width = 3
+attributes(mm)
+mm$coefficients
+newImmigrantdata <- data.frame(Immigrant = c(0,  20))
+mm %>% predict(newImmigrantdata)
+
+abline(mm)
+abline(mm,col=3,lwd=3) # line color = green, line width = 3
+attributes(mm)
+mm$coefficients
