@@ -31,12 +31,10 @@ data(swiss)
 pairs(~ Fertility + Education + Catholic, data = swiss, subset = Education < 20, main = "Swiss data, Education < 20")
 
 library(gdata) 
-#faster xls reader but requires perl!
 bronx1<-read.xls(file.choose(),pattern="BOROUGH",stringsAsFactors=FALSE,sheet=1,perl="<SOMEWHERE>/perl/bin/perl.exe") 
 bronx1<-bronx1[which(bronx1$GROSS.SQUARE.FEET!="0" & bronx1$LAND.SQUARE.FEET!="0" & bronx1$SALE.PRICE!="$0"),]
 
 View(bronx1)
-#
 attach(bronx1) # If you choose to attach, leave out the "data=." in lm regression
 SALE.PRICE<-sub("\\$","",SALE.PRICE) 
 SALE.PRICE<-as.numeric(gsub(",","", SALE.PRICE)) 
@@ -89,7 +87,6 @@ for(i in 1:2345) {
 nsample=450
 
 addsample<-bronxadd[sample.int(dim(bronxadd),size=nsample),]#I use nval here 
-# may need to install this package
 library(ggmap)
 addrlist<-paste(addsample$ADDRESSONLY, "NY", addsample$ZIP.CODE, "US", sep=" ") 
 querylist<-geocode(addrlist) #This is cool. Take a break.
@@ -117,7 +114,7 @@ mapmeans$NEIGHBORHOOD<-as.numeric(mapcoord$NEIGHBORHOOD)
 
 for(i in 1:8){
   mapmeans[,i]=as.numeric(mapmeans[,i]) 
-}#Now done for conversion to numeric
+}
 
 #Classification
 mapcoord$class<as.numeric(mapcoord$NEIGHBORHOOD)
@@ -138,13 +135,10 @@ knntesterr
 mapobj<-kmeans(mapmeans,5, iter.max=10, nstart=5, algorithm = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"))
 fitted(mapobj,method=c("centers","classes"))
 mapobj$centers
-#
 library(cluster)
 clusplot(mapmeans, mapobj$cluster, color=TRUE, shade=TRUE, labels=2, lines=0) 
-#
 library(fpc)#May need to install.packages("fpc")
 plotcluster(mapmeans, mapobj$cluster)
-#
 mapmeans1<-mapmeans[,-c(1,3,4)]
 mapobjnew<-kmeans(mapmeans1,5, iter.max=10, nstart=5, algorithm = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"))
 fitted(mapobjnew,method=c("centers","classes"))
@@ -167,7 +161,6 @@ cforest(Species ~ ., data=iris, controls=cforest_control(mtry=2, mincriterion=0)
 treeFert<-ctree(Fertility ~ Agriculture + Education + Catholic, data = swiss)
 
 cforest(Fertility ~ Agriculture + Education + Catholic, data = swiss, controls=cforest_control(mtry=2, mincriterion=0))
-# look at help info, vary parameters.
 
 library(tree)
 tr <- tree(Species ~ ., data=iris)
@@ -175,4 +168,3 @@ tr
 tr$frame
 plot(tr)
 text(tr)
-#find "prettier" ways to plot the tree
